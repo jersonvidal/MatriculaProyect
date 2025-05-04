@@ -1,0 +1,38 @@
+/* layout.component.css */
+
+/* Sidebar: se puede ocultar o mostrar según el estado */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  transition: left 0.3s ease; /* Transición suave */
+  z-index: 1000;
+}
+
+/* Cuando el sidebar está activo (visible) */
+#sidebar.active {
+  left: 0; /* Visible */
+}
+
+/* Cuando el sidebar no está activo (oculto) */
+#sidebar {
+  left: -250px; /* Oculto */
+}
+
+/* El contenido se desplaza cuando el sidebar está visible */
+.content {
+  transition: margin-left 0.3s ease; /* Transición suave */
+}
+
+#sidebar.active ~ .content {
+  margin-left: 250px; /* Desplaza el contenido a la derecha cuando el sidebar está visible */
+}
+
+@media (max-width: 991px) {
+  /* Para pantallas pequeñas, el sidebar puede ser ocultado por defecto con el botón de toggle */
+  .content {
+    margin-left: 0; /* El contenido no se desplaza en pantallas pequeñas */
+  }
+}

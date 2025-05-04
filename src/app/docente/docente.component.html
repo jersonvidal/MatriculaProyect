@@ -1,0 +1,108 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Lista de Docentes</h2>
+
+  <!-- Botón para abrir el modal de registro -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+      Registrar Docente
+    </button>
+  </div>
+
+  <!-- Tabla de Docentes -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Especialidad</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let docente of docentes">
+        <td>{{ docente.idDocente }}</td>
+        <td>{{ docente.nombre }}</td>
+        <td>{{ docente.apellido }}</td>
+        <td>{{ docente.especialidad }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="seleccionarDocente(docente)" data-bs-toggle="modal" data-bs-target="#modalEditar">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarDocente(docente.idDocente!)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="actualizarDocente()" #editarForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarLabel">Editar Docente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <label for="editNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="editNombre" placeholder="Nombre" [(ngModel)]="docenteSeleccionado.nombre" name="nombre" required>
+            </div>
+            <div class="mb-2">
+              <label for="editApellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="editApellido" placeholder="Apellido" [(ngModel)]="docenteSeleccionado.apellido" name="apellido" required>
+            </div>
+            <div class="mb-2">
+              <label for="editEspecialidad" class="form-label">Especialidad</label>
+              <input type="text" class="form-control" id="editEspecialidad" placeholder="Especialidad" [(ngModel)]="docenteSeleccionado.especialidad" name="especialidad" required>
+            </div>
+            <input type="hidden" [(ngModel)]="docenteSeleccionado.idDocente" name="idDocente">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="registrarDocente()" #registroForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">Registrar Docente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="nombre" name="nombre" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="apellido" name="apellido" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Especialidad" [(ngModel)]="especialidad" name="especialidad" required>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Registrar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

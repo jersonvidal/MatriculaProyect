@@ -1,0 +1,106 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Lista de GrupoCurso</h2>
+
+  <!-- Botón para abrir el modal de registro -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary"  (click)="abrirModalRegistrar(formGrupo)">
+      Registrar GrupoCurso
+    </button>
+  </div>
+
+  <!-- Tabla de grupo curso -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>Curso</th>
+        <th>Docente</th>
+        <th>Año - Semestre</th>
+        <th>Turno</th>
+        <th>Modalidad</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Si luego deseas mostrar una lista, puedes iterar aquí -->
+      <tr *ngFor="let grupo of grupoCursos">
+        <td>{{ grupo.curso.nombre }}</td>
+        <td>{{ grupo.docente.nombre }} {{ grupo.docente.apellido }}</td>
+        <td> {{ grupo.anio }} {{ grupo.semestre }}</td>
+        <td>{{ grupo.turno }}</td>
+        <td>{{ grupo.modalidad }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="editar(grupo)">
+            Editar
+          </button>
+          <button class="btn btn-danger" (click)="eliminar(grupo.idGrupo!)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalGrupoCurso" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="esEdicion ? actualizar(formGrupo) : registrar(formGrupo)" #formGrupo="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">               {{ esEdicion ? 'Editar Grupo Curso' : 'Registrar Grupo Curso' }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+
+            <!-- Curso -->
+            <div class="mb-2">
+              <label class="form-label">Curso</label>
+              <select class="form-select" [(ngModel)]="grupoCurso.curso.idCurso" name="curso" required>
+                <option value="">-- Selecciona un curso --</option>
+                <option *ngFor="let curso of cursos" [value]="curso.idCurso">{{ curso.nombre }}</option>
+              </select>
+            </div>
+
+            <!-- Docente -->
+            <div class="mb-2">
+              <label class="form-label">Docente</label>
+              <select class="form-select" [(ngModel)]="grupoCurso.docente.idDocente" name="docente" required>
+                <option value="">-- Selecciona un docente --</option>
+                <option *ngFor="let docente of docentes" [value]="docente.idDocente">{{ docente.nombre }} {{ docente.apellido }}</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">Semestre</label>
+              <select class="form-select" [(ngModel)]="grupoCurso.semestre" name="semestre" required>
+                <option value="">-- Selecciona un semestre --</option>
+                <option value="I">I</option>
+                <option value="II">II</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <label>Año</label>
+              <input type="number" class="form-control"  [(ngModel)]="grupoCurso.anio" name="anio" required>
+            </div>
+            <div class="mb-2">
+              <label>Turno</label>
+              <input type="text" class="form-control" placeholder="Turno (ej. Mañana)" [(ngModel)]="grupoCurso.turno" name="turno" required>
+            </div>
+            <div class="mb-2">
+              <label>Modalidad</label>
+              <input type="text" class="form-control" placeholder="Modalidad (ej. Presencial)" [(ngModel)]="grupoCurso.modalidad" name="modalidad" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+              {{ esEdicion ? 'Actualizar' : 'Registrar' }}
+            </button>              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

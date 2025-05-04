@@ -1,0 +1,116 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Listar Horario Grupo</h2>
+
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="abrirModalRegistrar(formHorario)">
+      Registrar Horario
+    </button>
+  </div>
+
+  <!-- Tabla de horarios -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>Día</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Aula</th>
+        <th>GrupoCurso</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let horario of horarios">
+        <td>{{ horario.diaSemana }}</td>
+        <td>{{ horario.horaInicio }}</td>
+        <td>{{ horario.horaFin }}</td>
+        <td>{{ horario.aula }}</td>
+        <td>
+          {{ horario.grupoCurso?.curso?.nombre }} -
+          {{ horario.grupoCurso?.docente?.nombre }} {{ horario.grupoCurso?.docente?.apellido }}
+        </td>
+        <td>
+          <button class="btn btn-warning" (click)="editar(horario)">
+            Editar
+          </button>
+          <button class="btn btn-danger" (click)="eliminar(horario.idHorario)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalHorario" tabindex="-1" aria-labelledby="modalHorarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="esEdicion ? actualizar(formHorario) : registrar(formHorario)" #formHorario="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalHorarioLabel">
+              {{ esEdicion ? 'Editar Horario' : 'Registrar Horario' }}
+            </h5>            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+
+            <!-- Día de la semana -->
+            <div class="mb-2">
+              <label class="form-label">Día de la semana</label>
+              <select class="form-select" [(ngModel)]="horario.diaSemana" name="diaSemana" required>
+                <option value="">-- Selecciona un día --</option>
+                <option value="LUNES">Lunes</option>
+                <option value="MARTES">Martes</option>
+                <option value="MIERCOLES">Miércoles</option>
+                <option value="JUEVES">Jueves</option>
+                <option value="VIERNES">Viernes</option>
+                <option value="SABADO">Sábado</option>
+                <option value="DOMINGO">Domingo</option>
+              </select>
+            </div>
+
+            <!-- Hora inicio -->
+            <div class="mb-2">
+              <label class="form-label">Hora de inicio</label>
+              <input type="time" class="form-control" [(ngModel)]="horario.horaInicio" name="horaInicio" required>
+            </div>
+
+            <!-- Hora fin -->
+            <div class="mb-2">
+              <label class="form-label">Hora de fin</label>
+              <input type="time" class="form-control" [(ngModel)]="horario.horaFin" name="horaFin" required>
+            </div>
+
+            <!-- Aula -->
+            <div class="mb-2">
+              <label class="form-label">Aula</label>
+              <input type="text" class="form-control" placeholder="Aula" [(ngModel)]="horario.aula" name="aula" required>
+            </div>
+
+            <!-- GrupoCurso -->
+            <div class="mb-2">
+              <label class="form-label">GrupoCurso</label>
+              <select class="form-select" [(ngModel)]="horario.grupoCurso" name="grupoCurso" required>
+                <option value="">-- Selecciona un grupo --</option>
+                <option *ngFor="let grupo of grupoCursos" [ngValue]="grupo">
+                  {{ grupo.curso?.nombre }} - {{ grupo.docente?.nombre }} {{ grupo.docente?.apellido }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+              {{ esEdicion ? 'Actualizar' : 'Registrar' }}
+            </button>            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

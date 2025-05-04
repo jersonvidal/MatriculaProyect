@@ -1,0 +1,96 @@
+/* layout.component.css */
+
+/* Estilo general del sidebar */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #343a40; /* Color de fondo oscuro */
+  color: #fff; /* Color de texto blanco */
+  transition: left 0.3s ease;
+  z-index: 1000;
+  font-size: 1.1rem; /* Aumentamos el tamaño de la fuente */
+  padding-top: 20px;
+}
+
+/* Cuando el sidebar está visible */
+#sidebar.active {
+  left: 0;
+}
+
+/* Cuando el sidebar está oculto */
+#sidebar {
+  left: -250px;
+}
+
+/* Asegurar que el contenido principal se mueva hacia la derecha cuando el sidebar está visible */
+.content {
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+#sidebar.active ~ .content {
+  margin-left: 250px;
+}
+
+/* Estilo de los enlaces del sidebar */
+#sidebar .nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem; /* Ajustamos el tamaño de la fuente */
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 5px; /* Bordes redondeados para los enlaces */
+  transition: background-color 0.3s;
+}
+
+#sidebar .nav-link:hover {
+  background-color: #495057; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo del botón de toggle en la navbar */
+.btn-outline-secondary {
+  font-size: 1.5rem;
+  color: #343a40;
+  border: 2px solid #343a40;
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+/* Mejoras para la navbar */
+.navbar {
+  padding: 10px 20px;
+  background-color: #fff;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Ajuste del contenido principal */
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 991px) {
+  .content {
+    margin-left: 0;
+  }
+
+  #sidebar {
+    width: 200px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+}

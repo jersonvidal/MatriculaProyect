@@ -1,0 +1,32 @@
+<div class="wrapper d-flex">
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar bg-dark text-white d-flex flex-column p-3" [ngClass]="{'active': isSidebarActive}">
+    <h4 class="text-center mb-4">Admin Matrícula</h4>
+    <a routerLink="/index" class="nav-link">Dashboard</a>
+    <a routerLink="/listar" class="nav-link">Alumnos</a>
+    <a routerLink="/cursos" class="nav-link">Cursos</a>
+    <a routerLink="/docentes" class="nav-link">Docentes</a>
+    <a routerLink="/grupocurso" class="nav-link">Grupos</a>
+    <a routerLink="/horariogrupo" class="nav-link">Horarios</a>
+    <a routerLink="/matricula" class="nav-link">Matrículas</a>
+    <a routerLink="/detallematricula" class="nav-link">Detalle Matrícula</a>
+    <a routerLink="/login" class="nav-link mt-auto text-danger">🚪 Cerrar Sesión</a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="content flex-grow-1 bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+      <!-- Botón de Toggle para todas las pantallas -->
+      <button class="btn btn-outline-secondary me-3" (click)="toggleSidebar()">
+        ☰
+      </button>
+      <span class="navbar-brand mb-0 h1">Panel de Administración</span>
+    </nav>
+
+    <!-- Vista interna -->
+    <main class="p-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

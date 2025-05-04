@@ -1,0 +1,116 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Lista de Alumnos</h2>
+
+  <!-- Botón para abrir el modal de registro -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+      Registrar Alumno
+    </button>
+  </div>
+
+  <!-- Tabla de alumnos -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>DNI</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let alumno of alumnos">
+        <td>{{ alumno.idAlumno }}</td>
+        <td>{{ alumno.nombres }}</td>
+        <td>{{ alumno.apellidos }}</td>
+        <td>{{ alumno.dni }}</td>
+        <td>{{ alumno.correo }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="seleccionarAlumno(alumno)" data-bs-toggle="modal" data-bs-target="#modalEditar">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-sm" *ngIf="alumno.idAlumno" (click)="eliminarAlumno(alumno.idAlumno)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="actualizarAlumno()" #editarForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarLabel">Editar Alumno</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <label for="editNombres" class="form-label">Nombres</label>
+              <input type="text" class="form-control" id="editNombres" placeholder="Nombres" [(ngModel)]="alumnoSeleccionado.nombres" name="nombres" required>
+            </div>
+            <div class="mb-2">
+              <label for="editApellidos" class="form-label">Apellidos</label>
+              <input type="text" class="form-control" id="editApellidos" placeholder="Apellidos" [(ngModel)]="alumnoSeleccionado.apellidos" name="apellidos" required>
+            </div>
+            <div class="mb-2">
+              <label for="editDni" class="form-label">DNI</label>
+              <input type="text" class="form-control" id="editDni" placeholder="DNI" [(ngModel)]="alumnoSeleccionado.dni" name="dni" required>
+            </div>
+            <div class="mb-2">
+              <label for="editCorreo" class="form-label">Correo</label>
+              <input type="email" class="form-control" id="editCorreo" placeholder="Correo" [(ngModel)]="alumnoSeleccionado.correo" name="correo" required>
+            </div>
+            <input type="hidden" [(ngModel)]="alumnoSeleccionado.idAlumno" name="idAlumno">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="registrarAlumno()" #registroForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">Registrar Alumno</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="dni" name="dni" required>
+            </div>
+            <div class="mb-2">
+              <input type="email" class="form-control" placeholder="Correo" [(ngModel)]="correo" name="correo" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Registrar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+ </div>
+

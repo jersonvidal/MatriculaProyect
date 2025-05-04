@@ -1,0 +1,84 @@
+<h2>Detalle de Matrícula</h2>
+
+<div>
+  <h3>Seleccionar Matrícula</h3>
+  <select class="form-select" (change)="seleccionarMatricula($event)">
+    <option value="" selected>-- Seleccionar Matrícula --</option>
+    <option *ngFor="let matricula of matriculas" [value]="matricula.idMatricula">
+      {{ matricula.alumno?.nombres }} {{ matricula.alumno?.apellidos }} (DNI: {{ matricula.alumno.dni }})
+    </option>
+  </select>
+</div>
+
+<div *ngIf="matriculaSeleccionada">
+  <h3>Detalles de la Matrícula Seleccionada (DNI del ALUMNO: {{ matriculaSeleccionada.alumno.dni }} - ID Matricula: {{ matriculaSeleccionada.idMatricula }})</h3>
+  <p>Alumno: {{ matriculaSeleccionada.alumno?.nombres }} {{ matriculaSeleccionada.alumno?.apellidos }}</p>
+  <p>Fecha de Matrícula: {{ matriculaSeleccionada.fechaMatricula | date }}</p>
+
+  <h4>Grupos Asignados</h4>
+  <table class="table table-striped" *ngIf="detalles.length > 0; else noDetalles">
+    <thead>
+    <tr>
+
+      <th>ID Detalle</th>
+      <th>Curso</th>
+      <th>Docente</th>
+      <th>Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let detalle of detalles" >
+      <td>{{ detalle.idDetalle }}</td>
+      <td>{{ detalle.grupoCurso?.curso?.nombre }} ({{ detalle.grupoCurso?.curso?.codigo }})</td>
+      <td>{{ detalle.grupoCurso?.docente?.nombre }} {{ detalle.grupoCurso?.docente?.apellido }}</td>
+      <td>
+        <span *ngIf="detalle.estado" class="badge bg-success">Activo</span>
+        <span *ngIf="!detalle.estado" class="badge bg-secondary">Inactivo</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <ng-template #noDetalles>
+    <p>No se han asignado grupos a esta matrícula.</p>
+  </ng-template>
+  <button *ngIf="showAsignarButton" class="btn btn-primary mt-3" (click)="abrirModalAsignar()">Asignar Grupo</button>
+
+</div>
+
+<div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="modalDetalleLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalDetalleLabel">Asignar Grupo a Matrícula (ID: {{ matriculaSeleccionada?.idMatricula }})</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #asignarForm="ngForm" (ngSubmit)="asignarGrupo(asignarForm)">
+          <input type="hidden" name="idMatricula" [(ngModel)]="detalleNuevo.idMatricula">
+
+          <div class="mb-3">
+            <label for="grupoCurso" class="form-label">Grupo Curso</label>
+            <select class="form-select" id="grupoCurso" name="grupoCurso" [(ngModel)]="detalleNuevo.grupoCurso.idGrupo" required>
+              <option [ngValue]="null">-- Seleccionar Grupo --</option>
+              <option *ngFor="let grupo of grupoCursos" [value]="grupo.idGrupo">
+                {{ grupo.curso?.nombre }} - Docente: {{ grupo.docente?.nombre }} {{ grupo.docente?.apellido }} (ID: {{ grupo.idGrupo }})
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado" [(ngModel)]="detalleNuevo.estado" required>
+              <option value="" disabled selected>-- Seleccionar Estado --</option>
+              <option [value]="true">Activo</option>
+              <option [value]="false">Inactivo</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="asignarForm.invalid">Asignar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Lista de Matricula</h2>
+
+  <!-- Botón para abrir el modal de registro -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary"  (click)="abrirModalRegistrar(formMatricula)">
+      Registrar Matricula
+    </button>
+    <button class="btn btn-info" [routerLink]="['/detallematricula', matricula.idMatricula]">
+      Asignar Cursos
+    </button>
+  </div>
+
+
+  <!-- Tabla de matricula curso -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+      <tr>
+        <th>Alumno</th>
+        <th>Dni Alumno</th>
+        <th>Correo Alumno</th>
+        <th>Fecha Matricula</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Si luego deseas mostrar una lista, puedes iterar aquí -->
+      <tr *ngFor="let matricula of matriculas">
+        <td>{{ matricula.alumno.nombres }} {{ matricula.alumno.apellidos }}</td>
+        <td>{{ matricula.alumno.dni }}</td>
+        <td>{{ matricula.alumno.correo }}</td>
+        <td>{{ matricula.fechaMatricula }}</td>
+        <td>
+          <!--
+          <button class="btn btn-danger" (click)="eliminar(matricula.idMatricula)">
+            Eliminar
+          </button> -->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalMatricula" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="esEdicion ? actualizar(formMatricula) : registrar(formMatricula)" #formMatricula="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">               {{ esEdicion ? 'Editar Matricula' : 'Registrar Matricula' }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+
+
+            <!-- Alumno -->
+            <div class="mb-2">
+              <label class="form-label">Alumno</label>
+              <select class="form-select" [(ngModel)]="matricula.alumno.idAlumno" name="alumno" required>
+                <option value="">-- Selecciona un alumno --</option>
+                <option *ngFor="let alumno of alumnos" [value]="alumno.idAlumno">{{ alumno.nombres }} {{ alumno.apellidos }} --- DNI: {{ alumno.dni }}</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <input type="date" class="form-control" placeholder="Fecha DE Matricula" [(ngModel)]="matricula.fechaMatricula" name="fechaMatricula" required>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+              {{ esEdicion ? 'Actualizar' : 'Matricular' }}
+            </button>              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

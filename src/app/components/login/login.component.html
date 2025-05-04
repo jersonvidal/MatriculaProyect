@@ -1,0 +1,41 @@
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <h3 class="text-center mb-4">Iniciar Sesión</h3>
+
+      <form (ngSubmit)="login()">
+        <div class="mb-3">
+          <input type="text" [(ngModel)]="username" name="username" class="form-control" placeholder="Usuario" required />
+        </div>
+        <div class="mb-3">
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Contraseña" required />
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary" type="submit">Ingresar</button>
+        </div>
+      </form>
+
+      <!-- Botón para abrir el modal -->
+      <button type="button" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#registerModal">
+        ¿No tienes cuenta? Regístrate
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Tamaño y centrado -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="registerModalLabel">Registro de Usuario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <app-register></app-register> <!-- Aquí se carga tu componente de registro -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

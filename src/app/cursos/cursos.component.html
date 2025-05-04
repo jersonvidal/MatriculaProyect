@@ -1,0 +1,109 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Lista de Cursos</h2>
+
+  <!-- Botón para abrir el modal de registro -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+      Registrar Curso
+    </button>
+  </div>
+
+
+<!-- Tabla de cursos -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+        <tr>
+          <th>ID Curso</th>
+          <th>Codigo curso</th>
+          <th>Nombre</th>
+          <th>Creditos</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let curso of cursos">
+          <td>{{ curso.idCurso }}</td>
+          <td>{{ curso.codigo }}</td>
+          <td>{{ curso.nombre }}</td>
+          <td>{{ curso.creditos }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-2" (click)="seleccionarCurso(curso)" data-bs-toggle="modal" data-bs-target="#modalEditar">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="curso.idCurso ? eliminarCurso(curso.idCurso) : null">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <!-- Modal Editar Curso-->
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="actualizarCurso()" #editarForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarLabel">Editar Curso</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <label for="editCodigo" class="form-label">Codigo curso</label>
+              <input type="text" class="form-control" id="editCodigo" placeholder="Codigo" [(ngModel)]="cursoSeleccionado.codigo" name="codigo" required>
+            </div>
+            <div class="mb-2">
+              <label for="editNombre" class="form-label">Nombre curso</label>
+              <input type="text" class="form-control" id="editNombre" placeholder="Nombre" [(ngModel)]="cursoSeleccionado.nombre" name="nombre" required>
+            </div>
+            <div class="mb-2">
+              <label for="editCreditos" class="form-label">Creditos</label>
+              <input type="number" class="form-control" id="editCreditos" placeholder="Creditos" [(ngModel)]="cursoSeleccionado.creditos" name="Creditos" required>
+            </div>
+
+            <input type="hidden" [(ngModel)]="cursoSeleccionado.idCurso" name="idCurso">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal de Registro -->
+  <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="registrarCurso()" #registroForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalRegistroLabel">Registrar Curso</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Codigo" [(ngModel)]="codigo" name="codigo" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="nombre" name="nombre" required>
+            </div>
+            <div class="mb-2">
+              <input type="number" class="form-control" placeholder="Creditos" [(ngModel)]="creditos" name="creditos" required min="1">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Registrar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>
